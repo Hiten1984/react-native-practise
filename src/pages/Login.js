@@ -8,6 +8,7 @@ import {
   TextInput,
   Navigator,
   TouchableHighlight,
+  // BackAndroid,
   ScrollView
 } from 'react-native';
 
@@ -16,20 +17,30 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 import Label from '../components/Label';
 
-
 const appLogo = require("../icons/icon_13cabs.png");
 
-export default class Login extends Component {
+// var navigator;
+//
+// BackAndroid.addEventListener('hardwareBackPress', () => {
+//   if (navigator && navigator.getCurrentRoutes().length > 0) {
+//     navigator.pop();
+//     return true;
+//   }
+//   return false;
+// });
+//
 
+export default class Login extends Component {
 renderScene(route, navigator) {
-if(route.name == 'Main') {
-   return <MainMenu navigator={navigator} />
- }
- if(route.name == 'Home') {
-   return <Home navigator={navigator} />
- }
- if(route.name == 'Login') {
-   return <LoginMenu navigator={navigator} />
+  // navigator = navigator;
+  if(route.name == 'Main') {
+    return <MainMenu navigator={navigator} />
+  }
+  if(route.name == 'Home') {
+    return <Home navigator={navigator} />
+  }
+  if(route.name == 'Login') {
+    return <LoginMenu navigator={navigator} />
  }
 }
 
@@ -41,7 +52,8 @@ render() {
     return (
       <Navigator
           style={{ flex:1 }}
-          renderScene={this.renderScene.bind(this)}
+          // renderScene={this.renderScene.bind(this)}
+          renderScene={(route, navigator) => this.renderScene(route, navigator)}
           initialRoute={{ name: 'Login' }}
            />
     );
@@ -65,11 +77,11 @@ class LoginMenu extends Component {
               />
         </View>
       </Container>
-      <Container>
-        <View style={styles.iconContainer}>
-          <Text text="Welcome to 13Cabs Driver app" />
-        </View>
-      </Container>
+
+          <Text style={styles.titleText}>
+            Welcome to 13Cabs Driver app
+            </Text>
+
         <Container>
           <Label text="Driver Number" />
             <TextInput
@@ -115,7 +127,7 @@ alignRight: {
     alignSelf: 'flex-end'
 },
 textInput: {
-    height: 40,
+    height: 50,
     fontSize: 20,
     backgroundColor: '#FFF'
 },
@@ -140,6 +152,19 @@ iconContainer: {
   justifyContent: 'center',
   alignItems: 'center'
 },
+labelContainer: {
+  height: 40,
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+titleText: {
+  fontFamily: 'sans-serif',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'red'
+  },
 inputIcon: {
   width: 200,
   height: 200
