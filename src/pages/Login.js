@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import MainMenu from './MainMenu';
+import Home from './Home';
 import Container from '../components/Container';
 import Button from '../components/Button';
 import Label from '../components/Label';
@@ -33,14 +34,19 @@ const appLogo = require("../icons/icon_13cabs.png");
 export default class Login extends Component {
 renderScene(route, navigator) {
   // navigator = navigator;
+  var globalNavigatorProps = { navigator }
   if(route.name == 'Main') {
-    return <MainMenu navigator={navigator} />
+    return (<MainMenu {...globalNavigatorProps}
+      />)
   }
-  if(route.name == 'Home') {
-    return <Home navigator={navigator} />
+  else if(route.name == 'Home') {
+    return (<Home {...globalNavigatorProps}
+      person={route.person}/>)
   }
-  if(route.name == 'Login') {
+  else if(route.name == 'Login') {
     return <LoginMenu navigator={navigator} />
+ } else {
+   <Text>{`YO YOU MESSED SOMETHING UP ${route}`}</Text>
  }
 }
 
@@ -53,9 +59,12 @@ render() {
       <Navigator
           style={{ flex:1 }}
           // renderScene={this.renderScene.bind(this)}
-          renderScene={(route, navigator) => this.renderScene(route, navigator)}
           initialRoute={{ name: 'Login' }}
-           />
+          ref="appNavigator"
+          renderScene={(route, navigator) => this.renderScene(route, navigator)}
+          configureScene={(route) => ({
+            ...route.sceneConfig || Navigator.SceneConfigs.FloatFromRight })} 
+            />
     );
   }
 }
